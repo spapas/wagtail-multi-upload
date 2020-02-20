@@ -11,6 +11,7 @@ How does it look
 
 ![Screenshot](https://raw.githubusercontent.com/spapas/wagtail-multi-upload/master/showme.png)
 
+So you'll have the normal image functionality *and* you'll be able to use the button to select multiple files from your computer!
 
 Installation
 ------------
@@ -80,3 +81,8 @@ class BlogPageGalleryImage(Orderable):
         FieldPanel('caption'),
     ]
 ```    
+
+Caveats
+-------
+
+For some, unknown to me reason, drag n drop is not working. I'd be grateful if anybody can help me with how to fix this.
