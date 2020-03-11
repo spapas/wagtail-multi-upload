@@ -86,3 +86,9 @@ Caveats
 -------
 
 For some, unknown to me reason, drag n drop is not working. I'd be grateful if anybody can help me with how to fix this.
+
+Changelog
+---------
+
+* 0.0.2: Fix bug when adding a new image without using the multi upload functionality
+* 0.0.1: Initial version

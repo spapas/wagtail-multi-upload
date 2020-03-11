@@ -14,6 +14,7 @@ function createUnBoundImageChooser(id) {
     var input = $('#' + id);
     var editLink = chooserElement.find('.edit-link');
 
+    
     var imageChosenCallback = function(imageData) {
         
         input.val(imageData.id);
@@ -21,17 +22,32 @@ function createUnBoundImageChooser(id) {
             src: imageData.preview.url,
             width: imageData.preview.width,
             height: imageData.preview.height,
-            alt: imageData.title
+            alt: imageData.title,
+            title: imageData.title
         });
         editLink.attr('href', imageData.edit_link);
         chooserElement.removeClass('blank');
     }
+    
 
     $('.action-choose', chooserElement).on('click', function() {
+        console.log("CLICK", window.chooserUrls.imageChooser)
         ModalWorkflow({
             url: window.chooserUrls.imageChooser,
+            onload: IMAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
             responses: {
-                imageChosen: imageChosenCallback
+                imageChosen: function(imageData) {
+                    input.val(imageData.id);
+                    previewImage.attr({
+                        src: imageData.preview.url,
+                        width: imageData.preview.width,
+                        height: imageData.preview.height,
+                        alt: imageData.title,
+                        title: imageData.title
+                    });
+                    chooserElement.removeClass('blank');
+                    editLink.attr('href', imageData.edit_link);
+                }
             }
         });
     });
@@ -47,6 +63,7 @@ function createUnBoundImageChooser(id) {
 function createImageChooser(id) {
     $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
 }
+
 
 function buildExpandingFormset(prefix, opts) {
     if (!opts) {
