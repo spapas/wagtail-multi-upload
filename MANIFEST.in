@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+recursive-include wagtail_multi_upload/templates *
+recursive-include wagtail_multi_upload/static *
