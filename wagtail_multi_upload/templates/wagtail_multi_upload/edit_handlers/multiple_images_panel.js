@@ -31,9 +31,9 @@ function createUnBoundImageChooser(id) {
     
 
     $('.action-choose', chooserElement).on('click', function() {
-        console.log("CLICK", window.chooserUrls.imageChooser)
+        var chooserUrl = chooserElement.data('chooserUrl')?chooserElement.data('chooserUrl'):window.chooserUrls.imageChooser
         ModalWorkflow({
-            url: window.chooserUrls.imageChooser,
+            url: chooserUrl,
             onload: IMAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
             responses: {
                 imageChosen: function(imageData) {
