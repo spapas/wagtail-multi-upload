@@ -90,6 +90,7 @@ For some, unknown to me reason, drag n drop is not working. I'd be grateful if a
 Changelog
 ---------
 
+* 0.0.5: Make it compatible with latest wagtail version
 * 0.0.4: Make it compatible with latest wagtail version
 * 0.0.3: Improve package includes
 * 0.0.2: Fix bug when adding a new image without using the multi upload functionality

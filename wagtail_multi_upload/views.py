@@ -144,7 +144,7 @@ def edit(request, image_id, callback=None):
         return JsonResponse({
             'success': False,
             'image_id': int(image_id),
-            'form': render_to_string('wagtailimages/multiple/edit_form.html', {
+            'form': render_to_string('wagtailadmin/generic/multiple_upload/edit_form.html', 'wagtailimages/multiple/edit_form.html', {
                 'image': image,
                 'form': form,
             }, request=request),
