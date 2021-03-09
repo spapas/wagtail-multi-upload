@@ -84,7 +84,10 @@ def add(request):
                     'alt': preview['alt'],
                     'edit_link': reverse('wagtailimages:edit', args=(image.id,))
                 },
-                'form': render_to_string('wagtailimages/multiple/edit_form.html', {
+                'form': render_to_string([
+                    'wagtailadmin/generic/multiple_upload/edit_form.html', 
+                    'wagtailimages/multiple/edit_form.html'
+                ], {
                     'image': image,
                     'form': get_image_edit_form(Image)(
                         instance=image, prefix='image-%d' % image.id, user=request.user
