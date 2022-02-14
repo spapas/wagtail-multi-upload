@@ -3,7 +3,7 @@ from django.http import HttpResponseBadRequest, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.views.decorators.http import require_POST
 from django.views.decorators.vary import vary_on_headers
 
@@ -15,6 +15,9 @@ from wagtail.images.permissions import permission_policy
 from wagtail.search.backends import get_search_backends
 
 permission_checker = PermissionPolicyChecker(permission_policy)
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 def get_image_edit_form(ImageModel):
@@ -49,7 +52,7 @@ def add(request):
         collections_to_choose = None
 
     if request.method == 'POST':
-        if not request.is_ajax():
+        if not is_ajax(request):
             return HttpResponseBadRequest("Cannot POST to this view without AJAX")
 
         if not request.FILES:
@@ -122,7 +125,7 @@ def edit(request, image_id, callback=None):
 
     image = get_object_or_404(Image, id=image_id)
 
-    if not request.is_ajax():
+    if not is_ajax(request):
         return HttpResponseBadRequest("Cannot POST to this view without AJAX")
 
     if not permission_policy.user_has_permission_for_instance(request.user, 'change', image):
@@ -161,7 +164,7 @@ def edit(request, image_id, callback=None):
 def delete(request, image_id):
     image = get_object_or_404(get_image_model(), id=image_id)
 
-    if not request.is_ajax():
+    if not is_ajax(request):
         return HttpResponseBadRequest("Cannot POST to this view without AJAX")
 
     if not permission_policy.user_has_permission_for_instance(request.user, 'delete', image):
