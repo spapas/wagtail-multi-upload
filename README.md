@@ -28,7 +28,7 @@ Finally, you *must* add a view to your urls.py like this:
 from wagtail_multi_upload.views import add as add_multiple_fix
 urlpatterns = [
     #... other views
-    url(r"^multi-add-fix/", add_multiple_fix, name="add_multiple_fix"),
+    re_path(r"^multi-add-fix/", add_multiple_fix, name="add_multiple_fix"),
 ]
 ```
 
