@@ -60,9 +60,18 @@ function createUnBoundImageChooser(id) {
     return imageChosenCallback;
 }
 
-function createImageChooser(id) {
-    $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
+var originalcreateImageChooser = window.createImageChooser;
+
+function modCreateImageChooser(id) {
+    if ($('#'+id).parents('.multiple').length) {
+        $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
+    } else {
+        return originalcreateImageChooser(id);
+    }
+
 }
+
+window.createImageChooser = modCreateImageChooser;
 
 
 function buildExpandingFormset(prefix, opts) {
