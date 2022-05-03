@@ -1,5 +1,7 @@
 # wagtail-multi-upload
 
+### WARNING: This package does not support Wagtail 3.x because of the changes needed to upgrade. I will keep supporting Wagtail 2.x as long as possible though.
+
 This panel can be used instead of an `InlinePanel` to help your editors upload multiple related images to your pages. 
 
 This project is completely based on this PR: https://github.com/wagtail/wagtail/pull/4393 by @rajeev (https://github.com/rajeev). For various reasons the PR hasn't been merged to wagtail core so I just retrieved the files there and added them to this repository along with some installation instructions. Please notice that there are *many* duplicated things because some basic functionality that this panel uses is actually missing from wagtail core so things that exist in wagtail core need to be duplicated here to override their functionality.
