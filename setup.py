@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='wagtail-multi-upload',
-    version='0.0.8',
+    version='0.1.0',
     description='',
 
     author='Serafeim Papastefanos',
