@@ -409,8 +409,12 @@ function InlinePanel(opts) {
                 itemElement.addClass('upload-success');
                 
                 var prefixId = panel.addOne();
-                var imageField = $('#id_{{ self.formset.prefix }}-'+prefixId+'-{{self.image_field_name}}');
+                var imageFieldId = 'id_{{ self.formset.prefix }}-'+prefixId+'-{{self.panel.image_field_name}}'
+                
+                var imageField = $('#' + imageFieldId);
+                
                 var imageChosen = imageField.data('imageChooser');
+                
                 imageChosen(response.image);
 
             } else {

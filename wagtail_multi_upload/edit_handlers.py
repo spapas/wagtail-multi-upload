@@ -35,7 +35,8 @@ class MultipleImagesPanel(InlinePanel):
         template = "wagtail_multi_upload/edit_handlers/multiple_images_panel.html"
         js_template = "wagtail_multi_upload/edit_handlers/multiple_images_panel.js"
 
-        def render(self):
+        def render_html(self, *parent_context):
+            
             context = {
                 'self': self,
                 'can_order': self.formset.can_order,
@@ -43,7 +44,7 @@ class MultipleImagesPanel(InlinePanel):
             context.update(self.render_extension())
             formset = render_to_string(self.template, context)
             js = self.render_js_init()
-            a+=1
+            
             return widget_with_script(formset, js)
 
         def render_js_init(self):
@@ -85,18 +86,18 @@ class MultipleImagesPanel(InlinePanel):
         def render_extension_js_init(self):
             return self.render_extension()
 
-    @property
-    def media(self):
-        return Media(js=[
-            'wagtailimages/js/vendor/load-image.min.js',
-            'wagtailimages/js/vendor/canvas-to-blob.min.js',
-            'wagtailadmin/js/vendor/jquery.iframe-transport.js',
-            'wagtailadmin/js/vendor/jquery.fileupload.js',
-            'wagtailadmin/js/vendor/jquery.fileupload-process.js',
-            'wagtailimages/js/vendor/jquery.fileupload-image.js',
-            'wagtailimages/js/vendor/jquery.fileupload-validate.js',
-            'wagtailadmin/js/vendor/tag-it.js'
-        ], css={
-            'screen': ('wagtail-multi-upload/css/add-multiple.css',)
-        })
+        @property
+        def media(self):
+            return Media(js=[
+                'wagtailimages/js/vendor/load-image.min.js',
+                'wagtailimages/js/vendor/canvas-to-blob.min.js',
+                'wagtailadmin/js/vendor/jquery.iframe-transport.js',
+                'wagtailadmin/js/vendor/jquery.fileupload.js',
+                'wagtailadmin/js/vendor/jquery.fileupload-process.js',
+                'wagtailimages/js/vendor/jquery.fileupload-image.js',
+                'wagtailimages/js/vendor/jquery.fileupload-validate.js',
+                'wagtailadmin/js/vendor/tag-it.js'
+            ], css={
+                'screen': ('wagtail-multi-upload/css/add-multiple.css',)
+            })
     
