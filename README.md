@@ -1,6 +1,6 @@
 # wagtail-multi-upload
 
-### WARNING: The current version of this package does only support Wagtail 3.x. If you want to use it with Wagtal 2.x please use version 0.0.8. Please see the changelog for more information.
+### WARNING: The current version of this package does only support Wagtail 3.x. If you want to use it with Wagtal 2.x please use version 0.0.8. See the changelog for more information.
 
 This panel can be used instead of an `InlinePanel` to help your editors upload multiple related images to your pages. 
 
@@ -21,6 +21,10 @@ Installation
 First of all install this using pip:
 
 pip install git+https://github.com/spapas/wagtail-multi-upload.git
+
+or use a specific tag to support older versions, for example for v0.0.8 that supports Wagtail 2.x
+
+pip install git+https://github.com/spapas/wagtail-multi-upload.git@v0.0.8
 
 then add `"wagtail_multi_upload"` to your `settings.INSTALLED_APPS`. 
 
