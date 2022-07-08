@@ -1,6 +1,6 @@
 # wagtail-multi-upload
 
-### WARNING: This package does not support Wagtail 3.x because of the changes needed to upgrade. I will keep supporting Wagtail 2.x as long as possible though.
+### WARNING: The current version of this package does only support Wagtail 3.x. If you want to use it with Wagtal 2.x please use version 0.0.8. Please see the changelog for more information.
 
 This panel can be used instead of an `InlinePanel` to help your editors upload multiple related images to your pages. 
 
@@ -92,6 +92,7 @@ For some, unknown to me reason, drag n drop is not working. I'd be grateful if a
 Changelog
 ---------
 
+* 0.1.0: Add Wagtail 3.x support. Drop support for Wagtail 2.x.
 * 0.0.8: Fixes version *Warning* This has been tested only with Wagtail 2.16. If for some reasons you have problems try installing the version 0.0.6 instead
 * 0.0.7: Fixes to work with Wagtail telepath. *Warning* This has been tested only with Wagtail 2.16. If for some reasons you have problems try installing the version 0.0.6 instead
 * 0.0.6: Make it compatible with latest wagtail version and Django 4.x
