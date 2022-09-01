@@ -63,22 +63,25 @@ function createUnBoundImageChooser(id) {
     return imageChosenCallback;
 }
 
-class BettertImageChooser extends ImageChooser {
-    initHTMLElements(id) {
-        if ($('#'+id).parents('.multiple').length) {
-            super.initHTMLElements(id);
-            $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
-        } else {
-            super.initHTMLElements(id);
+if (typeof ImageChooser === 'function') {
+    class BetterImageChooser extends ImageChooser {
+        initHTMLElements(id) {
+            if ($('#'+id).parents('.multiple').length) {
+                super.initHTMLElements(id);
+                $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
+            } else {
+                super.initHTMLElements(id);
+            }
         }
     }
+    window.ImageChooser = BetterImageChooser
+} else {
+    window.BetterImageChooser = class BetterImageChooser{}
+    var originalcreateImageChooser = window.createImageChooser;
+    window.createImageChooser = modCreateImageChooser;
 }
 
 
-var originalcreateImageChooser = window.createImageChooser;
-var originalcreateImageChooser = function(id) {
-    return new ImageChooser(id)
-}
 
 function modCreateImageChooser(id) {
     if ($('#'+id).parents('.multiple').length) {
@@ -88,8 +91,7 @@ function modCreateImageChooser(id) {
     }
 }
 
-window.createImageChooser = modCreateImageChooser;
-window.ImageChooser = BettertImageChooser
+
 
 function buildExpandingFormset(prefix, opts) {
     if (!opts) {
@@ -428,12 +430,9 @@ function InlinePanel(opts) {
                 var prefixId = panel.addOne();
                 var imageFieldId = 'id_{{ self.formset.prefix }}-'+prefixId+'-{{self.panel.image_field_name}}'
                 
-                console.log(imageFieldId)
                 var imageField = $('#' + imageFieldId);
-                console.log(imageField)
                 
                 var imageChosen = imageField.data('imageChooser');
-                console.log(imageChosen)
                 
                 imageChosen(response.image);
 

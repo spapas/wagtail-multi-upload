@@ -6,7 +6,7 @@ This panel can be used instead of an `InlinePanel` to help your editors upload m
 
 This project is completely based on this PR: https://github.com/wagtail/wagtail/pull/4393 by @rajeev (https://github.com/rajeev). For various reasons the PR hasn't been merged to wagtail core so I just retrieved the files there and added them to this repository along with some installation instructions. Please notice that there are *many* duplicated things because some basic functionality that this panel uses is actually missing from wagtail core so things that exist in wagtail core need to be duplicated here to override their functionality.
 
-This project has been mainly implemented to cover my requirements; I'll try to keep it updated with new wagtail versions but I can't promise anything. It should work fine with *Wagtail 2.8-3.0* (I've used it with all these versions myself); please see the changelog for more details. 
+This project has been mainly implemented to cover my requirements; I'll try to keep it updated with new wagtail versions but I can't promise anything. It should work fine with *Wagtail 2.8-4.0* (I've used it with all these versions myself); please see the changelog for more details. The latest version supports only Wagtail 3.x and 4.x.
 
 How does it look
 ----------------
@@ -91,6 +91,7 @@ class BlogPageGalleryImage(Orderable):
 Changelog
 ---------
 
+* 0.1.1: Add Wagtail 4.x support.
 * 0.1.0: Add Wagtail 3.x support. Drop support for Wagtail 2.x.
 * 0.0.8: Fixes version *Warning* This has been tested only with Wagtail 2.16. If for some reasons you have problems try installing the version 0.0.6 instead
 * 0.0.7: Fixes to work with Wagtail telepath. *Warning* This has been tested only with Wagtail 2.16. If for some reasons you have problems try installing the version 0.0.6 instead
