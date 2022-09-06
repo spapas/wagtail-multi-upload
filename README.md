@@ -91,6 +91,7 @@ class BlogPageGalleryImage(Orderable):
 Changelog
 ---------
 
+* 0.1.2: Fix bug with Wagtail 4.x
 * 0.1.1: Add Wagtail 4.x support.
 * 0.1.0: Add Wagtail 3.x support. Drop support for Wagtail 2.x.
 * 0.0.8: Fixes version *Warning* This has been tested only with Wagtail 2.16. If for some reasons you have problems try installing the version 0.0.6 instead

@@ -11,7 +11,6 @@ $(document).bind('drop dragover', function (e) {
 function createUnBoundImageChooser(id) {
     var chooserElement = $('#' + id + '-chooser');
     
-    
     var previewImage = chooserElement.find('.preview-image img');
     if(!previewImage.length) {
         previewImage = chooserElement.find('.chosen img');
@@ -32,33 +31,38 @@ function createUnBoundImageChooser(id) {
         editLink.attr('href', imageData.edit_link);
         chooserElement.removeClass('blank');
     }
-    
-    $('.action-choose', chooserElement).on('click', function() {
-        var chooserUrl = chooserElement.data('chooserUrl')?chooserElement.data('chooserUrl'):window.chooserUrls.imageChooser
-        ModalWorkflow({
-            url: chooserUrl,
-            onload: IMAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
-            responses: {
-                imageChosen: function(imageData) {
-                    input.val(imageData.id);
-                    previewImage.attr({
-                        src: imageData.preview.url,
-                        width: imageData.preview.width,
-                        height: imageData.preview.height,
-                        alt: imageData.title,
-                        title: imageData.title
-                    });
-                    chooserElement.removeClass('blank');
-                    editLink.attr('href', imageData.edit_link);
-                }
-            }
-        });
-    });
+    if (typeof ImageChooser === 'function') {
+        // Wagtail 4.x automatically initializes the ModalWorkflow 
+    } else {
+        $('.action-choose', chooserElement).on('click', function() {
+            var chooserUrl = chooserElement.data('chooserUrl')?chooserElement.data('chooserUrl'):window.chooserUrls.imageChooser
+            ModalWorkflow({
+                url: chooserUrl,
+                onload: IMAGE_CHOOSER_MODAL_ONLOAD_HANDLERS,
+                responses: {
+                    imageChosen: function(imageData) {
+                        input.val(imageData.id);
+                        previewImage.attr({
+                            src: imageData.preview.url,
+                            width: imageData.preview.width,
+                            height: imageData.preview.height,
+                            alt: imageData.title,
+                            title: imageData.title
+                        });
+                        chooserElement.removeClass('blank');
+                        editLink.attr('href', imageData.edit_link);
+                        
 
-    $('.action-clear', chooserElement).on('click', function() {
-        input.val('');
-        chooserElement.addClass('blank');
-    });
+                    }
+                }
+            });
+        });
+        
+        $('.action-clear', chooserElement).on('click', function() {
+            input.val('');
+            chooserElement.addClass('blank');
+        });
+}
 
     return imageChosenCallback;
 }
@@ -67,15 +71,18 @@ if (typeof ImageChooser === 'function') {
     class BetterImageChooser extends ImageChooser {
         initHTMLElements(id) {
             if ($('#'+id).parents('.multiple').length) {
-                super.initHTMLElements(id);
+
                 $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
+                super.initHTMLElements(id);
             } else {
+
                 super.initHTMLElements(id);
             }
         }
     }
     window.ImageChooser = BetterImageChooser
 } else {
+
     window.BetterImageChooser = class BetterImageChooser{}
     var originalcreateImageChooser = window.createImageChooser;
     window.createImageChooser = modCreateImageChooser;
@@ -255,7 +262,6 @@ function InlinePanel(opts) {
         parent.addClass('moving').css('height', parent.height());
 
         children.each(function() {
-            // console.log($(this));
             $(this).css('top', $(this).position().top);
         }).addClass('moving');
 
