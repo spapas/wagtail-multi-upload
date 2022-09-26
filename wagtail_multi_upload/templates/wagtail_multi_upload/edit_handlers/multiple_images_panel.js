@@ -11,10 +11,7 @@ $(document).bind('drop dragover', function (e) {
 function createUnBoundImageChooser(id) {
     var chooserElement = $('#' + id + '-chooser');
     
-    var previewImage = chooserElement.find('.preview-image img');
-    if(!previewImage.length) {
-        previewImage = chooserElement.find('.chosen img');
-    }
+    previewImage = chooserElement.find('.chosen img');
     
     var input = $('#' + id);
     var editLink = chooserElement.find('.edit-link');
@@ -67,27 +64,20 @@ function createUnBoundImageChooser(id) {
     return imageChosenCallback;
 }
 
-if (typeof ImageChooser === 'function') {
-    class BetterImageChooser extends ImageChooser {
-        initHTMLElements(id) {
-            if ($('#'+id).parents('.multiple').length) {
 
-                $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
-                super.initHTMLElements(id);
-            } else {
+class BetterImageChooser extends ImageChooser {
+    initHTMLElements(id) {
+        if ($('#'+id).parents('.multiple').length) {
 
-                super.initHTMLElements(id);
-            }
+            $('#' + id).data('imageChooser', createUnBoundImageChooser(id));
+            super.initHTMLElements(id);
+        } else {
+
+            super.initHTMLElements(id);
         }
     }
-    window.ImageChooser = BetterImageChooser
-} else {
-
-    window.BetterImageChooser = class BetterImageChooser{}
-    var originalcreateImageChooser = window.createImageChooser;
-    window.createImageChooser = modCreateImageChooser;
 }
-
+window.ImageChooser = BetterImageChooser
 
 
 function modCreateImageChooser(id) {
@@ -171,16 +161,19 @@ function InlinePanel(opts) {
         });
 
         if (opts.canOrder) {
-            $('#' + prefix + '-move-up').on('click', function() {
-                var currentChild = $('#' + childId);
-                var currentChildOrderElem = currentChild.find('input[name$="-ORDER"]');
-                var currentChildOrder = currentChildOrderElem.val();
-
-                /* find the previous visible 'inline_child' li before this one */
-                var prevChild = currentChild.prevAll(':not(.deleted)').first();
+            var currentChild = $('#' + childId);
+            currentChild.find('[data-inline-panel-child-move-up]').on('click', function() {
+                const currentChildOrderElem = currentChild.find(
+                    `input[name="${prefix}-ORDER"]`,
+                );
+                const currentChildOrder = currentChildOrderElem.val();
+                const prevChild = currentChild.prevAll(':not(.deleted)').first();
                 if (!prevChild.length) return;
-                var prevChildOrderElem = prevChild.find('input[name$="-ORDER"]');
-                var prevChildOrder = prevChildOrderElem.val();
+                const prevChildPrefix = prevChild[0].id.replace('inline_child_', '');
+                const prevChildOrderElem = prevChild.find(
+                `input[name="${prevChildPrefix}-ORDER"]`,
+                );
+                const prevChildOrder = prevChildOrderElem.val();
 
                 // async swap animation must run before the insertBefore line below, but doesn't need to finish first
                 self.animateSwap(currentChild, prevChild);
@@ -190,27 +183,32 @@ function InlinePanel(opts) {
                 prevChildOrderElem.val(currentChildOrder);
 
                 self.updateMoveButtonDisabledStates();
+                
             });
 
-            $('#' + prefix + '-move-down').on('click', function() {
-                var currentChild = $('#' + childId);
-                var currentChildOrderElem = currentChild.find('input[name$="-ORDER"]');
-                var currentChildOrder = currentChildOrderElem.val();
-
+            currentChild.find('[data-inline-panel-child-move-down]').on('click', function() {
+                const currentChildOrderElem = currentChild.find(
+                    `input[name="${prefix}-ORDER"]`,
+                  );
+                const currentChildOrder = currentChildOrderElem.val();
+        
                 /* find the next visible 'inline_child' li after this one */
-                var nextChild = currentChild.nextAll(':not(.deleted)').first();
+                const nextChild = currentChild.nextAll(':not(.deleted)').first();
                 if (!nextChild.length) return;
-                var nextChildOrderElem = nextChild.find('input[name$="-ORDER"]');
-                var nextChildOrder = nextChildOrderElem.val();
-
+                const nextChildPrefix = nextChild[0].id.replace('inline_child_', '');
+                const nextChildOrderElem = nextChild.find(
+                `input[name="${nextChildPrefix}-ORDER"]`,
+                );
+                const nextChildOrder = nextChildOrderElem.val();
+        
                 // async swap animation must run before the insertAfter line below, but doesn't need to finish first
                 self.animateSwap(currentChild, nextChild);
-
+        
                 currentChild.insertAfter(nextChild);
                 currentChildOrderElem.val(nextChildOrder);
                 nextChildOrderElem.val(currentChildOrder);
-
-                self.updateMoveButtonDisabledStates();
+        
+                self.updateMoveButtonDisabledStates();              
             });
         }
 
@@ -298,6 +296,53 @@ function InlinePanel(opts) {
             if (opts.onAdd) opts.onAdd();
         }
     });
+
+    self.formsElt = $('#' + opts.formsetPrefix + '-FORMS');
+
+    self.animateSwap = function animateSwap(item1, item2) {
+        const parent = self.formsElt;
+        const children = parent.children(':not(.deleted)');
+    
+        // Position children absolutely and add hard-coded height
+        // to prevent scroll jumps when reordering.
+        parent.css({
+          position: 'relative',
+          height: parent.height(),
+        });
+    
+        children
+          .each(function moveChildTop() {
+            $(this).css('top', $(this).position().top);
+          })
+          .css({
+            // Set this after the actual position so the items animate correctly.
+            position: 'absolute',
+            width: '100%',
+          });
+    
+        // animate swapping around
+        item1.animate(
+          {
+            top: item2.position().top,
+          },
+          200,
+          () => {
+            parent.removeAttr('style');
+            children.removeAttr('style');
+          },
+        );
+    
+        item2.animate(
+          {
+            top: item1.position().top,
+          },
+          200,
+          () => {
+            parent.removeAttr('style');
+            children.removeAttr('style');
+          },
+        );
+      };
 
     return self;
 }
