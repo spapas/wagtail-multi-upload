@@ -9,7 +9,7 @@ from django.views.decorators.vary import vary_on_headers
 
 from wagtail.admin.auth import PermissionPolicyChecker
 from wagtail.images import get_image_model
-from wagtail.images.fields import ALLOWED_EXTENSIONS
+from wagtail.images.fields import get_allowed_image_extensions
 from wagtail.images.forms import get_image_form
 from wagtail.images.permissions import permission_policy
 from wagtail.search.backends import get_search_backends
@@ -103,7 +103,7 @@ def add(request):
                 'success': False,
 
                 # https://github.com/django/django/blob/stable/1.6.x/django/forms/util.py#L45
-                'error_message': '\n'.join(['\n'.join([force_text(i) for i in v]) for k, v in form.errors.items()]),
+                'error_message': '\n'.join(['\n'.join([force_str(i) for i in v]) for k, v in form.errors.items()]),
             })
     else:
         form = ImageForm(user=request.user)
@@ -111,7 +111,7 @@ def add(request):
     return render(request, 'wagtailimages/multiple/add.html', {
         'max_filesize': form.fields['file'].max_upload_size,
         'help_text': form.fields['file'].help_text,
-        'allowed_extensions': ALLOWED_EXTENSIONS,
+        'allowed_extensions': get_allowed_image_extensions(),
         'error_max_file_size': form.fields['file'].error_messages['file_too_large_unknown_size'],
         'error_accepted_file_types': form.fields['file'].error_messages['invalid_image'],
         'collections': collections_to_choose,

@@ -1,4 +1,4 @@
-from wagtail.admin.edit_handlers import BaseChooserPanel, InlinePanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.images import get_image_model
 from django.forms.widgets import Media, MediaDefiningClass
 from django.template.loader import render_to_string
@@ -57,7 +57,7 @@ class MultipleImagesPanel(InlinePanel):
 
         def render_extension(self):
             from wagtail.images.permissions import permission_policy
-            from wagtail.images.fields import ALLOWED_EXTENSIONS
+            from wagtail.images.fields import get_allowed_image_extensions
             from wagtail.images.forms import get_image_form  
 
             Image = get_image_model()
@@ -77,7 +77,7 @@ class MultipleImagesPanel(InlinePanel):
             return {
                 'max_filesize': form.fields['file'].max_upload_size,
                 'help_text': form.fields['file'].help_text,
-                'allowed_extensions': ALLOWED_EXTENSIONS,
+                'allowed_extensions': get_allowed_image_extensions,
                 'error_max_file_size': form.fields['file'].error_messages['file_too_large_unknown_size'],
                 'error_accepted_file_types': form.fields['file'].error_messages['invalid_image'],
                 'collections': collections_to_choose,

@@ -6,7 +6,7 @@ This panel can be used instead of an `InlinePanel` to help your editors upload m
 
 This project is completely based on this PR: https://github.com/wagtail/wagtail/pull/4393 by @rajeev (https://github.com/rajeev). For various reasons the PR hasn't been merged to wagtail core so I just retrieved the files there and added them to this repository along with some installation instructions. Please notice that there are *many* duplicated things because some basic functionality that this panel uses is actually missing from wagtail core so things that exist in wagtail core need to be duplicated here to override their functionality.
 
-This project has been mainly implemented to cover my requirements; I'll try to keep it updated with new wagtail versions but I can't promise anything. It should work fine with *Wagtail 2.8-4.0* (I've used it with all these versions myself); please see the changelog for more details. The latest version supports only Wagtail 4.x.
+This project has been mainly implemented to cover my requirements; I'll try to keep it updated with new wagtail versions but I can't promise anything. It should work fine with *Wagtail 2.8-5.0* (I've used it with all these versions myself); please see the changelog for more details. The latest version supports only Wagtail 5.x.
 
 How does it look
 ----------------
@@ -27,6 +27,10 @@ or use a specific tag to support older versions, for example for v0.0.8 that sup
 pip install git+https://github.com/spapas/wagtail-multi-upload.git@v0.0.8
 
 or version v0.1.0 that supports Wagtail 3.x
+
+pip install git+https://github.com/spapas/wagtail-multi-upload.git@v0.1.0
+
+or version v0.2.0 that supports Wagtail 4.x
 
 pip install git+https://github.com/spapas/wagtail-multi-upload.git@v0.1.0
 
@@ -95,6 +99,7 @@ class BlogPageGalleryImage(Orderable):
 Changelog
 ---------
 
+* 0.3.0: Make it compatible with Wagtail 4.2, Django 5. This release drops support for earlier releases.
 * 0.2.0: Fix bug with Wagtail 4.x ordering. This release drops support for Wagtail 2.x and 3.x.
 * 0.1.2: Fix bug with Wagtail 4.x
 * 0.1.1: Add Wagtail 4.x support.
