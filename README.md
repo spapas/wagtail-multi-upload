@@ -1,6 +1,6 @@
 # wagtail-multi-upload
 
-### WARNING: The current version of this package does only support Wagtail 4.x. If you want to use it with Wagtal 2.x - 3.x please use version 0.0.8 or version 0.1.0. See the changelog for more information.
+### WARNING: The current version of this package does only support Wagtail 4.x. If you want to use it with Wagtal 2.x use version 0.0.8 or for Wagtail 3.x please use  version 0.1.0. See the changelog for more information.
 
 This panel can be used instead of an `InlinePanel` to help your editors upload multiple related images to your pages. 
 
