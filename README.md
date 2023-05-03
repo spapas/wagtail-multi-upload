@@ -32,7 +32,7 @@ pip install git+https://github.com/spapas/wagtail-multi-upload.git@v0.1.0
 
 or version v0.2.0 that supports Wagtail 4.x
 
-pip install git+https://github.com/spapas/wagtail-multi-upload.git@v0.1.0
+pip install git+https://github.com/spapas/wagtail-multi-upload.git@0.2.0
 
 then add `"wagtail_multi_upload"` to your `settings.INSTALLED_APPS`. 
 
